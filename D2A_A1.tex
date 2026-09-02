@@ -1,0 +1,691 @@
+\documentclass[11pt, letter, answers]{exam}
+\usepackage[inner=1.5cm,outer=1.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{array, booktabs, graphicx, color}
+\usepackage{xcolor, enumitem, lastpage}
+\usepackage{multirow, multicol, makecell}
+\usepackage{amsmath, amssymb, pifont}
+\usepackage{float}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{ifthen}
+\usepackage{lipsum}
+\usepackage{wasysym}
+
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily, language=Python}
+
+\usepackage[style=apa]{biblatex}
+%\bibliography{./Slides/references}
+
+%--------------------------------------------------------------
+% Header
+%--------------------------------------------------------------
+\firstpageheader{94-867/19-867/12-768\quad Fall 2026}{}{Carnegie Mellon University}
+\runningheader  {94-867/19-867/12-768\quad Fall 2026}{}{Carnegie Mellon University}
+
+\firstpageheadrule
+\runningheadrule
+
+%--------------------------------------------------------------
+% Footer
+%--------------------------------------------------------------
+\firstpagefooter{}{}{Page \thepage\ of \pageref{LastPage}}
+\runningfooter {}{}{Page \thepage\ of \pageref{LastPage}}
+
+%--------------------------------------------------------------
+% Hyperlink setting
+%--------------------------------------------------------------
+\usepackage{hyperref}
+\usepackage{nameref}
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=cyan, filecolor=magenta}
+\sloppy
+
+%--------------------------------------------------------------
+% Define grade and solution
+%--------------------------------------------------------------
+\newcommand{\grade}[1]{
+    \small\textcolor{magenta}{\emph{(#1 \ifnum#1=1 point\else points\fi)}}%
+    \normalsize
+}
+\newcommand{\pt}[1]{
+    \small{(#1 \ifnum#1=1 pt\else pts\fi)}
+    \normalsize
+}
+\newcommand{\sol}[1]{\ifshowsolutions{\leavevmode{\color{blue}Solution: #1}}\fi}
+
+%--------------------------------------------------------------
+% Define question types
+%--------------------------------------------------------------
+\newcommand{\sOne}{\textbf{Select one: }}
+\newcommand{\sAll}{\textbf{Select all that apply: }}
+\newcommand{\tof}{\textbf{True or False: }}
+\newcommand{\saq}{\textbf{Short answer: }}
+\newcommand{\sCode}{\textbf{Show your code: }}
+\newcommand{\sPlot}{\textbf{Show your plot: }}
+\newcommand{\sCal}{\textbf{Show your calculation: }}
+
+%--------------------------------------------------------------
+% Define MCQ options
+%--------------------------------------------------------------
+\usepackage{tikz}
+\usepackage{cancel}
+\CorrectChoiceEmphasis{}
+\checkedchar{\blackcircle}
+\newcommand{\blackcircle}{\tikz\draw[black,fill=black] (0,0) circle (1ex);}
+
+%--------------------------------------------------------------
+% Define SAQ answer box
+%--------------------------------------------------------------
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{listings, breakable}
+\newtcolorbox{answerBox}[1][]
+{
+    fit,
+    enhanced,
+    colback=white,
+    sidebyside align=top,
+    box align=top,
+    #1
+}
+\newtcblisting{codeBox}[1][]{
+    listing only,
+    listing options={language=Python, basicstyle=\ttfamily\small},
+    top=0pt,
+    colback=white,
+    enhanced,
+    sidebyside align=top,
+    box align=top,
+    #1
+}
+
+%--------------------------------------------------------------
+% Solution mode
+%--------------------------------------------------------------
+\newif\ifshowsolutions  % whether to show solutions (true) or not (false)
+\showsolutionstrue   
+% \showsolutionsfalse     % Comment this line out to show solution
+
+
+\begin{document}
+
+\begin{center}
+{\Large \textsc{From Data to Action: Designing Human-Centered, Impact-Driven Decision Systems}} \\
+[0.5em]
+{\Large Assignment 1}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ccc}
+\hline
+\textbf{Due Date} & & \textbf{Submission} \\
+September 4, 2026\quad 11:59PM & & Gradescope \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{1em}
+This assignment is worth \textit{\color{magenta}\textit{100 points}}, accounting for \textbf{15\%} of the total course grade. It consists of \textbf{3 problems} aligned with techniques/tools covered in \textbf{lectures in Weeks 1-2}. Each problem may have one or two components: \textbf{written} and \textbf{programming}. You are expected to first work through the written questions to build context and conceptual understanding, and then, if applicable, complete the programming part. 
+
+Please strictly adhere to the Academic Integrity policies.% stated in the course syllabus and DO NOT CHEAT. We will run plagiarism checks on Gradescope.
+
+In general, the following is required:
+\begin{itemize}
+    \item Follow \nameref{sec:a1_submission} \grade{2}
+    \item Problem \#\ref{sec:a1_mip}: \nameref{sec:a1_mip} \grade{40}
+    \item Problem \#\ref{sec:a1_sir}: \nameref{sec:a1_sir} \grade{18}
+    \item Problem \#\ref{sec:a1_mab}: \nameref{sec:a1_mab} \grade{40}
+\end{itemize}
+
+
+\phantomsection
+\section*{Submission Instruction}
+\label{sec:a1_submission}
+
+Gradescope will have \textbf{two submission entries}: one for the programming and the other for the written. Failing to follow the submission instructions will result in a 2-point deduction as well as a delay in the grading process.
+
+\subsection*{Programming Submission}
+One programming submission attempt should include \textbf{all Jupyter Notebooks and, if required, CSV files}. Submission attempts are unlimited. The Autograder relies on file names to run and assign grades. Therefore, please do \textbf{NOT rename} the provided start notebooks. If the handout specifies a required name for an output file, you must \textbf{use that exact same name} so the Autograder can successfully access it.
+
+\subsection*{Written Submission}
+The written submission should be \textbf{1 single PDF file} containing your answers to all written questions. It must strictly follow this handout template without altering its layout or page structure. In other words, your PDF submission should have the same number of pages and the same alignment as this provided PDF template. Misalignment will cause Gradescope to incorrectly detect answer positions, which you can notice right after submission; as a result, your submission may not be graded correctly by the AI-assisted Autograder. 
+
+To ensure page consistency and alignment, you may complete the written questions in one of the following ways:
+
+\begin{itemize}
+\item type in \LaTeX{} using the provided \texttt{.tex} file (we recommend using Overleaf)
+\item write on an electronic handout directly
+\item print the handout, write by hand, and scan it at Letter size
+\end{itemize}
+
+Each written question is either a multiple-choice question (MCQ) or a short-answer question (SAQ). You may receive partial credit on ``Select all that apply'' MCQs. Specific answer instructions are as follows:
+
+\paragraph{For ``Select one" questions,} please fill in the appropriate circle completely:
+
+\begin{enumerate}
+\item \pt{1} \sOne Who teaches this course?
+\begin{checkboxes}
+    \CorrectChoice Peter Zhang
+    \choice Michael Johnson
+    \choice Jennifer Smith
+\end{checkboxes}
+\end{enumerate}
+
+\begin{itemize}[topsep=0.5em]
+\item If you work in \LaTeX{}, simply replace \texttt{\textbackslash choice} with \texttt{\textbackslash CorrectChoice} as your answers. Our pre-defined environment will render PDF correctly.
+\item If you write on an electronic copy, use \textbf{black} color to fill the circle. An overfilled circle is acceptable.
+\item If you write on a print copy and need to change your answer, you may cross out the previous answer and circle in the new answer:
+\end{itemize}
+
+\begin{enumerate}[label={}]
+\item \pt{1} \sOne Who teaches this course?
+\begin{checkboxes}
+    \CorrectChoice Peter Zhang
+    \choice Michael Johnson
+    \checkboxchar{\xcancel{$\blackcircle$}{}} \choice Jennifer Smith
+\end{checkboxes}
+\end{enumerate}
+
+
+\paragraph{For ``Select all that apply" questions,} please fill in all appropriate squares completely:
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item \pt{2} \sAll Which ones are the correct course number?
+{
+\checkboxchar{$\Box$} \checkedchar{$\blacksquare$}
+\begin{checkboxes}
+    \CorrectChoice 94-867
+    \CorrectChoice 19-867
+    \CorrectChoice 12-768
+    \choice 12-867
+    \choice None of the above
+\end{checkboxes}
+}
+\end{enumerate}
+
+\begin{itemize}[topsep=0.5em]
+\item If you work in \LaTeX, please do \textbf{NOT modify} the following line, which ensures square option symbol:\\
+\verb|\checkboxchar{$\Box$} \checkedchar{$\blacksquare$}|
+\item To change answers on a print copy, you may cross out the previous answer(s) and fill in the new answer(s):
+\end{itemize}
+
+\begin{enumerate}[label={}]
+\item \pt{2} \sAll Which ones are the correct course numbers?
+{
+\checkboxchar{$\Box$} \checkedchar{$\blacksquare$}
+\begin{checkboxes}
+    \CorrectChoice 94-867
+    \CorrectChoice 19-867
+    \CorrectChoice 12-768
+    \choice 12-867
+    \checkboxchar{\xcancel{$\blacksquare$}{}} \choice None of the above
+\end{checkboxes}
+}
+\end{enumerate}
+
+
+\newpage
+\paragraph{For ``Short answer'' and ``Show your plot'' questions,} please complete inside the corresponding answer boxes. Two sample answers are shown below: one is acceptable, while the other is NOT.
+
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item \pt{5} \saq Use the \texttt{lipsum} package to generate a paragraph of Lorem Ipsum text.
+
+\begin{answerBox}[height=1.2in]
+\lipsum[4]
+\end{answerBox}
+
+$\uparrow$ This answer is \textbf{acceptable}.
+\end{enumerate}
+
+
+\begin{enumerate}[label={}]
+\item \pt{5} \saq Use the \texttt{lipsum} package to generate the first paragraph of Lorem Ipsum text.
+
+\begin{tcolorbox}[height=1.2in, colback=white, sidebyside align=top, box align=top]
+\lipsum[3]
+\end{tcolorbox}
+
+\vspace{2.5em}
+{\color{red}$\uparrow$ This answer is \textbf{NOT acceptable}.}
+\end{enumerate}
+
+
+\paragraph{For ``Show your code'' questions,} the general requirements stay the same as ``Short answer'' and ``Show your plot''. When asked to show code for a function, your response must include the complete function definition with all lines of code (an example below for your reference). Note that pseudocode will NOT receive any credits.
+
+\begin{enumerate}
+\setcounter{enumi}{3}
+\item \pt{5} \sCode Complete the \texttt{show\_all\_entry()} function.
+
+\begin{codeBox}[height=2in]
+def show_all_entry(array):
+    for r in range(array.shape[0]):
+        for c in range(array.shape[1]):
+            print(array[r, c])
+\end{codeBox}
+\end{enumerate}
+
+
+You can use one of the following ways to show code:
+\begin{itemize}
+    \item Type code in \LaTeX. The given answer box is already pre-formatted for coding.
+    \item Insert a screenshot of your code inside the answer box
+    \item Write by hand with clear indents
+\end{itemize}
+
+
+
+
+\newpage
+\section{Café Staffing via MIP}
+\label{sec:a1_mip}
+
+Workforce staffing is a critical challenge in the services industry. It involves designing work schedules and assigning personnel shifts to meet fluctuating demand for resources over time. Applications are widespread, including but not limited to telephone operators, hospital nurses, police officers, bus drivers, and restaurant staff. Mathematical optimization provides a systematic approach to solving such business problems.
+
+XCoffee is a rapidly growing café in Pittsburgh. The shop currently employs \textbf{six full-time staff members}, each working 5 days per week and 8 hours per day, totaling 40 hours per week. Full-time employees provide their availability for six days (Table~\ref{tab:available}): 1 for available, 0 for unavailable. The manager arranges the weekly schedule accordingly.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{lccccccc}
+        \hline
+         & Mon & Tue & Wed & Thu & Fri & Sat & Sun \\
+        \hline
+        Amy & 1 & 1 & 1 & 1 & 1 & 0 & 1 \\
+        Bob & 1 & 1 & 1 & 1 & 1 & 0 & 1 \\
+        Cathy & 1 & 1 & 1 & 1 & 1 & 1 & 0 \\
+        Dan & 1 & 1 & 1 & 1 & 1 & 1 & 0 \\
+        Ed & 0 & 1 & 1 & 1 & 1 & 1 & 1 \\
+        Frank & 1 & 1 & 1 & 0 & 1 & 1 & 1 \\
+        \hline
+    \end{tabular}
+    \caption{Full-time Employee Weekly Availability Data}
+    \label{tab:available}
+\end{table}
+
+With recent growth in customer traffic, XCoffee’s manager has identified that existing full-time staff cannot meet peak demand during certain hours. To quantify staffing needs, the café has defined \textbf{three standard 4-hour shifts} and developed a demand table (Table~\ref{tab:demand}) specifying the minimum number of workers required for each shift on each day of the week.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{cccc}
+        \hline
+         & \makecell[c]{Early shift\\(7 AM – 11 AM)} & \makecell[c]{Midday shift\\(11 AM – 3 PM)} & \makecell[c]{Late shift\\(3 PM – 7 PM)} \\
+        \hline
+        Mon & 5 & 3 & 2 \\
+        Tue & 5 & 3 & 2 \\
+        Wed & 5 & 3 & 2 \\
+        Thu & 5 & 3 & 2 \\
+        Fri & 6 & 4 & 3 \\
+        Sat & 7 & 5 & 4 \\
+        Sun & 6 & 4 & 3 \\
+        \hline
+    \end{tabular}
+    \caption{Weekly Staffing Demand}
+    \label{tab:demand}
+\end{table}
+
+Each full-time employee can be scheduled for two consecutive shifts, thereby fulfilling the daily 8-hour requirement. Since full-time coverage alone is insufficient to meet the staffing demand outlined in Table~\ref{tab:demand}, the café is considering hiring part-time employees. Each part-time employee will be scheduled for exactly one 4-hour shift per working day. For management efficiency, at least one full-time employee is assigned to every shift to provide oversight and supervision for part-time workers.
+
+The manager needs to \textbf{decide which day-shift assignments are given to full-time employees and how many part-time employees are required in each shift.} 
+
+The objective is to \textbf{minimize the total number of part-time hires.}
+
+\textit{(Note: Data for Table~\ref{tab:demand} and \ref{tab:available} is provided in the handout folder named \textup{\texttt{Data}})} 
+
+
+\subsection{Written}
+
+Let's define the mathematical notation and solve this problem as a Mixed-Integer Programming (MIP):
+
+\paragraph{Indices and Sets}
+\begin{itemize}
+    \item $e\in\mathcal{E} = \{\text{Amy}, \text{Bob}, \text{Cathy}, \text{Dan}, \text{Emma}, \text{Frank}\}$: full-time employees
+    \item $d\in\mathcal{D} = \{\text{Mon}, \text{Tue},\text{Wed},\text{Thu}, \text{Fri},\text{Sat},\text{Sun}\}$: working days of a week
+    \item $s\in\mathcal{S} = \{\text{Early}, \text{Mid}, \text{Late}\}$ : 4-hour shifts
+\end{itemize}
+
+
+\paragraph{Parameters}
+\begin{itemize}
+    \item \textbf{Staffing demand}: required minimum number of workers on day $d$ during shift slot $s$ (refer to Table~\ref{tab:demand}) {\Large $$\text{demand}_{d,s} \in \mathbb{Z}_{\ge 0}$$}
+    \item \textbf{Full-time employee availability}: 1 if full-time employee $e$ is available on day $d$; 0 otherwise (Table~\ref{tab:available}) {\Large $$\text{availability}_{e,d} \in \{0,1\}$$}
+\end{itemize}
+
+
+\paragraph{Decision Variables}
+The manager needs to decide, for each 4-hour shift every day, which full-time employee(s) are assigned to work and how many part-time employees should be hired. 
+\begin{itemize}
+    \large
+    \item \textbf{Full-time staffing} : 1 if full-time employee $e$ is assigned to shift $s$ on day $d$; 0 otherwise {\Large $$x_{e,d,s} \in \{0,1\}$$}
+    \item \textbf{Part-time hiring}: integer number of part-time workers hired for shift $s$ on day $d$ {\Large $$y_{d,s} \in \mathbb{Z}_{\ge 0}$$}
+\end{itemize}
+
+\begin{enumerate}[label=(\alph*)]
+\item \grade{2} \saq How many decision variables in total? Show your process.
+\begin{answerBox}[height=1in]
+
+\end{answerBox}
+\end{enumerate}
+
+
+\paragraph{Objective Function} Given the fixed full-time workforce, the objective is to minimize the total number of part-time workers hired during the week.
+
+\begin{enumerate}[label=(\alph*), resume]
+\item \grade{3} \saq Write the \textbf{objective function}:
+\begin{answerBox}[height=1.2in]
+
+\end{answerBox}
+\end{enumerate}
+
+
+\paragraph{Constraints}
+\begin{enumerate}[label=(\alph*), resume]
+\item \grade{3} \saq Write the \textbf{demand constraint}:
+\\ \textit{Hint: please use $\boldsymbol{\geq}$ instead $=$; otherwise the model may be insolvable in Gurobi}
+\begin{answerBox}[height=1.2in]
+
+\end{answerBox}
+
+
+\item \grade{3} \saq Write the \textbf{full-time availability constraint}:
+\\ \textit{Hint: For each employee, check each shift with his/her daily availability}
+\begin{answerBox}[height=1.2in]
+
+\end{answerBox}
+
+
+\item \grade{3} \saq Write the \textbf{full-time weekly 40-hours constraint}: 
+\\With 4-hour shift window, each full-time employee should be scheduled for exactly 10 shifts per week.
+
+\begin{answerBox}[height=1.2in]
+
+\end{answerBox}
+
+
+\item \grade{3} \saq Write the \textbf{full-time daily 8-hours constraint}: 
+\\With 4-hour shift window, each full-time employee should be scheduled for no more than 2 shifts per day.
+
+\begin{answerBox}[height=1.2in]
+
+\end{answerBox}
+
+
+\item \grade{3} \saq Write the \textbf{full-time supervision constraint}: 
+\\ For each shift, there must be at least 1 full-time employee scheduled to supervise part-time workers.
+\begin{answerBox}[height=1.2in]
+
+\end{answerBox}
+
+
+\item \textbf{Full-time consecutive-shift constraint}:
+\\ If full-time employee $e$ is scheduled on day $d$, then $e$ must be assigned to \textbf{2 consecutive shifts} on that day. In other words, $e$ cannot be assigned only to the early (7 AM - 11 AM) and late (3 PM - 7 PM) shifts without covering the midday period. Thus, a valid assignment for $e$ is either \textbf{Early + Midday} or \textbf{Midday + Late}. Since this constraint is tricky, we have provided the formulas below for your programming.
+{
+\Large
+\begin{align*}
+    x_{e, d, s=\text{Mid}} &\ge x_{e, d, s=\text{Early}} & &\forall e ,  \forall d & \text{\normalsize(middle dominates)} 
+    \\
+    x_{e, d, s=\text{Mid}} &\ge x_{e, d, s=\text{Late}} & &\forall e ,  \forall d & \text{\normalsize(middle dominates)} 
+    \\
+    x_{e, d, s=\text{Mid}} &\le x_{e, d, s=\text{Early}} + x_{e, d, s=\text{Late}} & &\forall e ,  \forall d & \text{\normalsize(if middle on, at least one neighbor)} 
+\end{align*}
+}
+
+
+\end{enumerate}
+
+
+\vspace{1em}
+\subsection{Programming}
+Complete the provided start Jupyter notebook, \texttt{D2A\_F25\_A1\_MIP.ipynb}, to solve this optimization problem.
+
+Export the following spreadsheets of your model results as guided in the notebook.
+
+\begin{enumerate}[label=(\alph*)]
+    \item \grade{10} \texttt{full\_time\_staffing.csv}
+    \item \grade{10} \texttt{part\_time\_hiring.csv}
+\end{enumerate}
+
+
+\vspace{4em}
+\section{TikTok Trends via SIR}
+\label{sec:a1_sir}
+Just as the flu spreads in a population, TikTok trends spread among users through exposure, reposts, and eventual fatigue. Viral growth on TikTok is not random, which follows clear dynamics of discovery, imitation, and decline. We can use the SIR epidemic model to study how a TikTok trend spreads across the user base and to inform platform and creator strategies:
+
+{
+\Large
+\begin{align}
+    S(t+1) - S(t) &= -\beta\cdot\frac{S(t)}{N}\cdot I(t) \\ \nonumber \\
+    I(t+1) - I(t) &= \beta\cdot\frac{S(t)}{N}\cdot I(t) - \gamma\cdot I(t) \\ \nonumber \\
+    R(t+1) - R(t) &= \gamma\cdot I(t)
+\end{align}
+}
+
+\begin{itemize}
+    \item $S(t)$ = users who have not yet seen the trend (susceptible) 
+    \item $I(t)$ = users who are actively posting or resharing the trend (infected)
+    \item $R(t)$ = users who are tired of the trend and have moved on (recovered)
+\end{itemize}
+
+
+\subsection{Written}
+\begin{enumerate}[label=(\alph*)]
+
+\item \grade{3} \sOne Which of the following best describes “total population” $N$?
+\begin{checkboxes}
+    \choice The number of TikTok employees
+    \choice The total number of viral posts
+    \choice The number of users who liked a trend
+    \choice The total number of TikTok users
+\end{checkboxes}
+
+
+\item \grade{3} \sOne Which of the following best describes the role of $\beta$ in the TikTok SIR model?
+\begin{checkboxes}
+    \choice The probability a user stops reposting a trend
+    \choice The average number of reshares per active user per time step
+    \choice The number of total TikTok users
+    \choice The speed of app downloads
+\end{checkboxes}
+
+
+\item \grade{3} \sOne Which of the following best describes the role of $\gamma$ in the TikTok SIR model?
+\begin{checkboxes}
+    \choice The probability that a user first encounters the trend
+    \choice The average number of reshares per active user
+    \choice The probability that an active user stops resharing at each time step
+    \choice The total number of TikTok users in the population
+\end{checkboxes}
+
+
+\item \grade{3} \sOne If $\beta$ is high and $\gamma$ is low, what happens to the trend?
+\begin{checkboxes}
+    \choice It fizzles quickly
+    \choice It spreads rapidly and sustains virality
+    \choice It never catches on
+    \choice It disappears after one step
+\end{checkboxes}
+
+
+\item \grade{3} \sOne If TikTok reduces the visibility of a harmful trend by slowing resharing (e.g., requiring confirmation before reposting), which parameter of the SIR model is most directly affected?
+\begin{checkboxes}
+    \choice The total user population $N$
+    \choice The number of recovered users $R(t)$
+    \choice The transmission rate $\beta$
+    \choice The recovery/fatigue rate $\gamma$
+\end{checkboxes}
+
+
+\item \grade{3} \sOne If $I(t)$ is growing rapidly from one day to the next, which of the following must be true?
+\begin{checkboxes}
+    \choice $\gamma$ is very high, meaning users are burning out quickly
+    \choice New reshares are outpacing fatigue (recoveries)
+    \choice $R(t)$ is shrinking
+    \choice The total population $N$ is decreasing
+\end{checkboxes}
+
+\end{enumerate}
+
+
+\newpage
+\section{Duolingo Template Selection via Multi-Armed Bandits}
+\label{sec:a1_mab}
+In this problem, we adapt the business context of the Duolingo case introduced in the lecture. Recall that each Duolingo notification is generated from one template that is selected from a pool. Then the business question is \textbf{which template to select} to maximize user engagement. 
+
+Duolingo proposed their Sleeping, Recovering Bandit Algorithm in a MAB setup:
+
+{
+\Large
+\begin{align}
+    \pi(a\mid t) \;&=\; \frac{\exp\big(s_a^t/\tau\big)}{\sum_{a}\exp\big(s_{a}^t/\tau\big)}
+    \label{eq:duolingo} 
+    \\ 
+    \nonumber \\
+    i_t &\sim \pi(\cdot \mid t)
+\end{align}
+}
+
+\begin{itemize}
+    \item Step \(t\): a notification push
+    \item Arm \(a\): a message template
+    % \item Eligible set \(A_t \subseteq A\): a set of eligible arms at timestep \(t\)
+    \item Policy \(\pi(a\mid t)\): probability of selecting action $a$ at timestep $t$
+    \item Action $i_t$: an action is sampled from policy distribution $i_t \sim \pi(\cdot \mid t)$
+    \item Arm score \(s_a^t\): adjusted relative reward score with memory decay penalty of arm \(a\) at timestep \(t\)
+    \item Hyperparameter \(\tau\): exploration temperature
+\end{itemize}
+
+\vspace{4em}
+We will implement \textbf{$\epsilon$-Greedy} (Equation~\ref{eq:egreedy}) and \textbf{Upper Confidence Bound} (Equation~\ref{eq:ucb}) in this assignment.
+
+{
+\Large
+\begin{align}
+    \epsilon\text{-Greedy:} & & i_t &= \begin{cases}
+        \operatorname*{argmax}_a r_a^t & \text{with probability } 1-\epsilon \\
+        \text{random action} & \text{with probability } \epsilon
+    \end{cases}
+    \label{eq:egreedy}
+    \\
+    \nonumber \\
+    \text{UCB:} & & i_t &= \operatorname*{argmax}_a \bigg[
+    r_a^t+c\sqrt{\frac{\ln (t)}{n_a^{t}}}
+    \bigg]
+    \label{eq:ucb}
+\end{align}
+}
+
+\begin{itemize}
+    \item $r_a^t$: average reward of arm $a$ received up to timestep $t$
+    \item $n_a^t$: number of times arm $a$ selected up to timestep $t$
+    \item $\epsilon, c$: hyperparameters
+\end{itemize}
+
+
+\newpage
+\subsection{Written}
+
+\begin{enumerate}[label=(\alph*)]
+
+\item \grade{5} \sAll Which of the following statements correctly describe the effect of the softmax exploration temperature parameter $\tau$ in policy $\pi(a \mid t)$ (Equation~\ref{eq:duolingo})? 
+{
+\checkboxchar{$\Box$} \checkedchar{$\blacksquare$}  % DO NOT CHANGE THIS LINE
+\begin{checkboxes}
+    \choice Larger $\tau$ makes the policy more exploitative, concentrating probability on the top arm.
+    \choice Smaller $\tau$ makes the policy more exploratory, approaching a uniform distribution.
+    \choice As $\tau \to \infty$, the policy becomes nearly uniform over all actions.
+    \choice With $\tau=1$, probabilities equal the raw scores normalized by their sum.
+    \choice At each timestep, after calculating $\pi(a \mid t)$ for each $a$, select the highest-probability action.
+\end{checkboxes}
+}
+
+
+\item \grade{3} \sOne In $\epsilon$-greedy algorithm (Equation~\ref{eq:egreedy}), what is the main role of the parameter $\epsilon$?
+\begin{checkboxes}
+    \choice To increase the learning rate of average reward updates
+    \choice To ensure that each arm is selected exactly the same number of times
+    \choice To guarantee convergence to the optimal arm after a fixed number of iterations
+    \choice To balance exploration (trying new template) and exploitation (choosing the best-known one)
+\end{checkboxes}
+
+
+\item \grade{3} \sOne  Why does UCB (Equation~\ref{eq:ucb}) guarantee that each template is selected at least once?
+\begin{checkboxes}
+    \choice Because $\epsilon$ forces exploration with probability $0.2$
+    \choice Because templates with $n_a= 0$ have $\text{UCB}_a = \infty$
+    \choice Because $r_a$ starts at 0 for all templates
+    \choice Because tie-breaking forces fairness
+\end{checkboxes}
+
+\end{enumerate}
+
+
+\vspace{1em}
+\subsection{Programming}
+With the business context and technical concepts, \textbf{you should work through the provided start Jupyter notebook, \texttt{D2A\_F25\_A1\_MAB.ipynb}, before answering the following questions.}
+
+Please note that this programming part does not require any additional spreadsheet submissions; \textbf{all responses should be included in this PDF based on your programming implementation.}
+
+\vspace{1em}
+\begin{enumerate}[label=(\alph*)]
+
+\item \grade{3} \sOne With the 100-step initialization, which template should be selected for the next step (i.e., $t=101$) under a \textbf{full exploitation} policy?
+\begin{checkboxes}
+    \choice Template 0
+    \choice Template 2
+    \choice Template 5
+    \choice Template 10
+\end{checkboxes}
+
+
+\newpage
+\item \grade{5} \sCode Complete the \texttt{update()} function in \texttt{MAB} class. 
+\begin{codeBox}[height=2.6in]
+
+\end{codeBox}
+
+
+\item \grade{5} \sCode Complete the \texttt{step()} function in \texttt{EpsilonGreedy} class.
+\begin{codeBox}[height=2.6in]
+
+\end{codeBox}
+
+
+\item \grade{5} \sCode Complete the \texttt{step()} function in \texttt{UCB} class.
+\begin{codeBox}[height=2.6in]
+
+\end{codeBox}
+
+
+\item \grade{6} \sPlot Include your algorithm comparison plot and explain the plot in words. \\What did you find from the plot? Your plot should:
+\begin{itemize}
+    \item have 3 \texttt{EpsilonGreedy} lines, 3 \texttt{UCB} lines, and 1 \texttt{FullRandom} line
+    \item clearly indicate hyperparameters (up to your choice) you have experimented with in the legend
+\end{itemize}
+\begin{answerBox}[height=4.5in]
+    
+\end{answerBox}
+
+
+\item \grade{5} \saq We have explored MAB algorithms as a solution for selecting Duolingo notification templates. How would you revise this problem solution to better reflect real-world business needs? Justify your answer. You may consider aspects such as assumptions, experimental design, evaluation metrics, algorithmic choices, etc.
+\begin{answerBox}[height=2.6in]
+
+\end{answerBox}
+
+\end{enumerate}
+
+
+\newpage
+\section*{Deliverables}
+Congratulations! All of the work is complete. The last step is to submit your deliverables to Gradescope:
+
+\begin{itemize}
+    \item 1 single PDF file to ``\textbf{Assignment 1 Written}''
+    \item the follwoing files to ``\textbf{Assignment 1 Programming}''
+    \begin{itemize}
+        \item \texttt{D2A\_F25\_A1\_MIP.ipynb}
+        \item \texttt{D2A\_F25\_A1\_MAB.ipynb}
+        \item \texttt{full\_time\_staffing.csv}
+        \item \texttt{part\_time\_hiring.csv}
+    \end{itemize}
+\end{itemize}
+
+\end{document}
