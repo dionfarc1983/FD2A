@@ -1,0 +1,88 @@
+﻿OBJECTID,site_name,latitude,longitude,type,is_existing_center,site_id
+1,Greenfield Senior Center,40.424295,-79.93623,Senior Center (Existing),-1,0
+2,Homewood Senior Center,40.4568575,-79.8935651,Senior Center (Existing),-1,1
+3,Sheraden Senior Center,40.4551497,-80.0566851,Senior Center (Existing),-1,2
+4,South Side Senior Center,40.4235543,-79.966615,Senior Center (Existing),-1,3
+5,Mount Washington Senior Center,40.429882,-80.008315,Senior Center (Existing),-1,4
+6,Allegheny Senior Center,40.4311588,-80.0689405,Senior/Community Center,0,5
+7,Lawrenceville Senior Center,40.4676651,-79.9585976,Senior/Community Center,0,6
+8,Hazelwood Senior Center,40.412428,-79.9443368,Senior/Community Center,0,7
+9,Hill House Senior Center,40.442733,-79.9822265,Senior/Community Center,0,8
+10,Northview Heights Community Center,40.4779316,-79.9998276,Senior/Community Center,0,9
+11,Arlington Community Center,40.4192352,-79.9750104,Senior/Community Center,0,10
+12,Brookline Community Center,40.3960505,-80.0226609,Senior/Community Center,0,11
+13,East Liberty Community Center,40.4621005,-79.9264941,Senior/Community Center,0,12
+14,Beechview Community Center,40.4106798,-80.0243862,Senior/Community Center,0,13
+15,Carrick Community Center,40.3994596,-79.9889174,Senior/Community Center,0,14
+16,Manchester Community Center,40.455313,-80.025247,Senior/Community Center,0,15
+17,Morningside Community Center,40.4817581,-79.9299973,Senior/Community Center,0,16
+18,Wilkinsburg Community Center,40.4432677,-79.8860979,Senior/Community Center,0,17
+19,Allegheny Northside Senior Center and Hazlett Theater,40.45309924,-80.00534252,Senior,0,18
+20,Ammon Recreation Center,40.44873494,-79.97785631,Pool,0,19
+21,Arlington Pool Restrooms,40.41775268,-79.97468811,Pool,0,20
+22,Banksville Pool Building and Shelter,40.41478443,-80.04017572,Pool,0,21
+23,Beechview Senior and Community Center,40.4107409,-80.02436259,Senior,0,22
+24,Bloomfield Pool and Recreation Center,40.46213307,-79.95358858,Pool/Rec,0,23
+25,Brighton Heights Pool Building,40.48685655,-80.03099689,Pool,0,24
+26,Brighton Heights Pool Guard Room,40.48697619,-80.03101242,Pool,0,25
+27,Brighton Heights Senior Center,40.47927288,-80.03583098,Senior,0,26
+28,Brookline Pool Building,40.39065072,-80.00749196,Pool,0,27
+29,Brookline Pool Guard Room,40.39074934,-80.00754814,Pool,0,28
+30,Burgwin Pool Building,40.40499997,-79.93715454,Pool,0,29
+31,East Hills Pool Building,40.45349658,-79.87099826,Pool,0,30
+32,Fairywood Pool Building,40.44925858,-80.08084917,Pool Closed,0,31
+33,Glen Hazel Senior Center,40.40674251,-79.93311132,Senior,0,32
+34,Hazelwood Community Center,40.40647495,-79.94265993,Community,0,33
+35,Highland Park Pool Building,40.48218369,-79.91173714,Pool,0,34
+36,Homewood Pool Building,40.45423673,-79.90010495,Pool,0,35
+37,Leslie Pool Building,40.47344815,-79.95738891,Pool Closed,0,36
+38,Magee Pool Building,40.42506023,-79.93711661,Pool,0,37
+39,Magee Recreation Center,40.42437587,-79.936772,Senior,0,38
+40,Manchester Pool Building,40.45870807,-80.02578805,Pool Closed,0,39
+41,Martin Luther King Cultural Center,40.45209494,-79.96387834,Community,0,40
+42,McBride Swimming Pool Building,40.37025225,-79.90740949,Pool,0,41
+43,McKinley Park Activities Building,40.41368229,-80.00422549,Senior,0,42
+44,Moore Pool and Recreation Building,40.40551162,-80.01396647,Pool/Rec,0,43
+45,Morningside Senior Center,40.48390558,-79.92498368,Senior,0,44
+46,Oliver Bath House,40.42959711,-79.98887873,Pool,0,45
+47,Ormsby Pool and Recreation Center,40.42908967,-79.97429674,Pool/Rec,0,46
+48,Overbrook Community Center,40.38483705,-79.995351,Community,0,47
+49,Overbrook Senior Center,40.38847171,-79.9956976,Senior,0,48
+50,Paulson Pool Building,40.4686146,-79.90115812,Pool,0,49
+51,Paulson Pool Guard Room,40.46871448,-79.9010745,Pool Closed,0,50
+52,Phillips Gym and Recreation Center,40.39156272,-79.99097801,Pool/Rec,0,51
+53,Ream Pool Building and Recreation Center,40.43096473,-80.01348232,Pool,0,52
+54,Riverview Pool Building,40.47971734,-80.01817492,Pool,0,53
+55,Schenley Park Pool Building,40.43453727,-79.94671026,Pool,0,54
+56,Sheraden Pool Building,40.45729593,-80.05975634,Pool,0,55
+57,Southside Market House,40.42943651,-79.9865169,Senior,0,56
+58,Sue Murray Filter Building,40.45108643,-80.00177498,Pool,0,57
+59,Sue Murray Pool Building,40.45095346,-80.00140987,Pool,0,58
+60,Warrington Recreation Center,40.42126474,-80.00095723,Pool/Rec,0,59
+61,West End Senior Center,40.43886415,-80.03470926,Senior,0,60
+62,West Penn Pool Building,40.4552907,-79.96961251,Pool,0,61
+63,West Penn Pool Entrance Building,40.45540478,-79.96974834,Pool,0,62
+64,West Penn Recreation Center,40.45565165,-79.96954385,Pool/Rec,0,63
+65,Westwood Pool Building,40.4310921,-80.04982389,Pool,0,64
+66,Westwood Pool Guard Room,40.4310741,-80.04994999,Pool,0,65
+67,Morningside Crossing,40.48612326,-79.92583181,Senior,0,66
+68,Fowler Pool Buiding,40.46889224,-80.01372928,Pool,0,67
+69,ALLEGHENY LIBRARY,40.456392,-80.006613,Library,0,68
+70,BEECHVIEW LIBRARY,40.407026,-80.027741,Library,0,69
+71,BROOKLINE LIBRARY,40.394399,-80.021427,Library,0,70
+72,CARRICK LIBRARY,40.397019,-79.987547,Library,0,71
+73,DOWNTOWN & BUSINESS LIBRARY,40.441749,-79.997112,Library,0,72
+74,EAST LIBERTY LIBRARY,40.460963,-79.926502,Library,0,73
+75,HAZELWOOD LIBRARY,40.409805,-79.943849,Library,0,74
+76,HILL DISTRICT LIBRARY,40.445471,-79.976706,Library,0,75
+77,HOMEWOOD LIBRARY,40.455284,-79.899213,Library,0,76
+78,KNOXVILLE LIBRARY,40.413186,-79.989149,Library,0,77
+79,LAWRENCEVILLE LIBRARY,40.467605,-79.959082,Library,0,78
+80,LIBRARY FOR THE BLIND & PHYSICALLY HANDICAPPED,40.453817,-79.949183,Library,0,79
+81,MAIN (OAKLAND) LIBRARY,40.443458,-79.949011,Library,0,80
+82,MOUNT WASHINGTON LIBRARY,40.433509,-80.010487,Library,0,81
+83,SHERADEN LIBRARY,40.45521,-80.056555,Library,0,82
+84,SOUTH SIDE LIBRARY,40.428631,-79.974224,Library,0,83
+85,SQUIRREL HILL LIBRARY,40.438574,-79.922623,Library,0,84
+86,WEST END LIBRARY,40.440057,-80.034045,Library,0,85
+87,WOODS RUN LIBRARY,40.476254,-80.030204,Library,0,86
